@@ -9,6 +9,21 @@ part 'all_organisations_state.dart';
 class AllOrganisationsBloc
     extends Bloc<AllOrganisationsEvent, AllOrganisationsState> {
   AllOrganisationsBloc() : super(AllOrganisationsInitial()) {
+    on<toggleNameEvent>((event, emit) {
+      print("toggling name event");
+      if (state.name == true) {
+        state.name = false;
+      } else {
+        state.name = true;
+      }
+    });
+    on<toggleTenantEvent>((event, emit) {
+      if (state.tenant == true) {
+        state.tenant = false;
+      } else {
+        state.tenant = true;
+      }
+    });
     on<AllOrganisationsEvent>((event, emit) {
       // TODO: implement event handler
     });
@@ -18,7 +33,7 @@ class AllOrganisationsBloc
       // Here, you would typically make an API call to submit the organisation
       try {
         // Assume postOrganisation is a function that posts the data to the server
-        await getAllOrganisations();
+        await getAllOrganisations("");
         // print("back here");
         // print(state.allOrganisations);
         // On success, emit a success state or handle accordingly
@@ -27,19 +42,42 @@ class AllOrganisationsBloc
         // On failure, emit a failure state or handle errors
       }
     });
+    on<getQueryOrganisationsEvent>((event, emit) async {
+      try {
+        await getAllOrganisations(event.query);
+      } catch (error) {
+        // On failure, emit a failure state or handle errors
+      }
+    });
   }
 
   Dio dio = Dio();
 
-  Future<void> getAllOrganisations() async {
+  Future<void> getAllOrganisations(String query) async {
     // Implement the actual API call or database submission here
     // For example, using an HTTP client to POST the data
     print("Hitting get req");
-
+    // name = true;
     try {
       // Define the request data, if needed
-      final data = {};
-
+      var data = {};
+      if (state.name) {
+        data = {
+          "name": query,
+        };
+      }
+      if (state.tenant) {
+        data = {
+          "tenantId": query,
+        };
+      }
+      if (state.name && state.tenant) {
+        data = {
+          "name": query,
+          "tenantId": query,
+        };
+      }
+      print(data);
       // Make the HTTP POST request
       dynamic response = await dio.post(
         'http://localhost:8081/Backend_assignment/org-services/organisation/v1/_search',

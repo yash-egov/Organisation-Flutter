@@ -114,7 +114,7 @@ class _ContactFormState extends State<ContactForm> {
                             .read<OrganisationBloc>()
                             .add(addOrganisationContactDetailEvent(contact));
                       },
-                      label: 'Submit',
+                      label: 'add Contact',
                       type: ButtonType.secondary,
                     );
                   },
