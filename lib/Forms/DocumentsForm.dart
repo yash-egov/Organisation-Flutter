@@ -7,7 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -47,17 +47,15 @@ class _DocumentsFormState extends State<DocumentsForm> {
             key: _formKey,
             child: ListView(
               children: [
-                // TextFormField(
-                //   controller: _documentTypeController,
-                //   decoration: InputDecoration(labelText: 'Document Type'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter document type';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => document.documentType = value,
-                // ),
+                DigitTextFormInput(
+                  label: "Document Id",
+                  initialValue: '',
+                  controller: _idController,
+                  innerLabel: '',
+                  helpText: 'unique id',
+                  charCount: true,
+                  onChange: (value) => document.id = value,
+                ),
                 DigitTextFormInput(
                   label: "Document Type",
                   initialValue: '',
@@ -67,17 +65,7 @@ class _DocumentsFormState extends State<DocumentsForm> {
                   charCount: true,
                   onChange: (value) => document.documentType = value,
                 ),
-                // TextFormField(
-                //   controller: _fileStoreController,
-                //   decoration: InputDecoration(labelText: 'File Store'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter file store';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => document.fileStore = value,
-                // ),
+
                 DigitTextFormInput(
                   label: "File Store",
                   initialValue: '',
@@ -91,13 +79,14 @@ class _DocumentsFormState extends State<DocumentsForm> {
                 // Add more fields if needed
                 BlocBuilder<OrganisationBloc, OrganisationState>(
                   builder: (context, state) {
-                    return ElevatedButton(
+                    return DigitButton(
                       onPressed: () {
                         context
                             .read<OrganisationBloc>()
                             .add(addOrganisationDocumentEvent(document));
                       },
-                      child: Text('Add Document'),
+                      label: 'Add Document',
+                      type: ButtonType.secondary,
                     );
                   },
                 ),

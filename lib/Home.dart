@@ -2,9 +2,11 @@ import 'package:digit_flutter_components/enum/app_enums.dart';
 import 'package:digit_flutter_components/theme/digit_theme.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:organisations/RegisterationFormScreen.dart';
+import 'package:organisations/bloc/allOrganisations/all_organisations_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -44,12 +46,19 @@ class _HomeState extends State<Home> {
                   BoxDecoration(borderRadius: BorderRadius.circular(20)),
               margin: EdgeInsets.fromLTRB(
                   buttonMarginLR, 0, buttonMarginLR, buttonMarginBottom),
-              child: DigitButton(
-                label: 'View All Organisations',
-                onPressed: () {
-                  AutoRouter.of(context).push(AllOrganisations());
+              child: BlocBuilder<AllOrganisationsBloc, AllOrganisationsState>(
+                builder: (context, state) {
+                  return DigitButton(
+                    label: 'View All Organisations',
+                    onPressed: () {
+                      context
+                          .read<AllOrganisationsBloc>()
+                          .add(getAllOrganisationsEvent());
+                      AutoRouter.of(context).push(AllOrganisations());
+                    },
+                    type: ButtonType.primary,
+                  );
                 },
-                type: ButtonType.primary,
               ),
             ),
             Container(

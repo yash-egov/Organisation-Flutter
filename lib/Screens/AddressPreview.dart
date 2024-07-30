@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/Models/Organisation.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 
 class AddressPreview extends StatefulWidget {
   int index;
-  AddressPreview(this.index, {super.key});
+  List<Address>? addresses;
+  AddressPreview(this.index, this.addresses, {super.key});
 
   @override
   State<AddressPreview> createState() => _AddressPreviewState(index);
@@ -17,6 +19,7 @@ class _AddressPreviewState extends State<AddressPreview> {
   _AddressPreviewState(this.index);
   @override
   Widget build(BuildContext context) {
+    final address = widget.addresses?[widget.index];
     return BlocBuilder<OrganisationBloc, OrganisationState>(
       builder: (context, state) {
         return Container(
@@ -34,22 +37,13 @@ class _AddressPreviewState extends State<AddressPreview> {
                   height: 15,
                 ),
                 Row(
-                  children: [
-                    Text("TenantId : "),
-                    Text('${state.org.orgAddress?[index]?.tenantId}')
-                  ],
+                  children: [Text("TenantId : "), Text('${address?.tenantId}')],
                 ),
                 Row(
-                  children: [
-                    Text("City : "),
-                    Text('${state.org.orgAddress?[index].city}')
-                  ],
+                  children: [Text("City : "), Text('${address?.city}')],
                 ),
                 Row(
-                  children: [
-                    Text("Pincode : "),
-                    Text('${state.org.orgAddress?[index].pincode}')
-                  ],
+                  children: [Text("Pincode : "), Text('${address?.pincode}')],
                 )
               ],
             ),

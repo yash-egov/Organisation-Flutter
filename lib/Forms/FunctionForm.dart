@@ -6,7 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -60,17 +60,6 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 charCount: true,
                 onChange: (value) => functions.type = value,
               ),
-              // TextFormField(
-              //   controller: _typeController,
-              //   decoration: InputDecoration(labelText: 'Type'),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter type';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.type = value,
-              // ),
               DigitTextFormInput(
                 label: "Category",
                 initialValue: '',
@@ -80,28 +69,6 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 charCount: true,
                 onChange: (value) => functions.category = value,
               ),
-              // TextFormField(
-              //   controller: _categoryController,
-              //   decoration: InputDecoration(labelText: 'Category'),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter category';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.category = value,
-              // ),
-              // TextFormField(
-              //   controller: _classController,
-              //   decoration: InputDecoration(labelText: 'Class'),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter class';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.className = value,
-              // ),
               DigitTextFormInput(
                 label: "Class",
                 initialValue: '',
@@ -111,18 +78,6 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 charCount: true,
                 onChange: (value) => functions.className = value,
               ),
-              // TextFormField(
-              //   controller: _validFromController,
-              //   decoration: InputDecoration(labelText: 'Valid From'),
-              //   keyboardType: TextInputType.number,
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter valid from date';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.validFrom = int.parse(value),
-              // ),
               DigitDateFormInput(
                 label: "Valid From",
                 controller: _validFromController,
@@ -142,13 +97,14 @@ class _FunctionsFormState extends State<FunctionsForm> {
               ),
               BlocBuilder<OrganisationBloc, OrganisationState>(
                 builder: (context, state) {
-                  return ElevatedButton(
+                  return DigitButton(
                     onPressed: () {
                       context
                           .read<OrganisationBloc>()
                           .add(addOrganisationFunctionEvent(functions));
                     },
-                    child: Text('Add Function'),
+                    label: 'Add Function',
+                    type: ButtonType.secondary,
                   );
                 },
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 
 @RoutePage()
 class FunctionDocumentsForm extends StatefulWidget {

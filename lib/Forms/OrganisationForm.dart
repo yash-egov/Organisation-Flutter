@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 import 'package:organisations/router/app_router.gr.dart';
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/Models/Organisation.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 
 class ContactPreview extends StatefulWidget {
   int index;
-  ContactPreview(this.index, {super.key});
+  List<ContactDetail>? contacts;
+  ContactPreview(this.index, this.contacts, {super.key});
 
   @override
   State<ContactPreview> createState() => _ContactPreviewState(index);
@@ -15,6 +17,7 @@ class _ContactPreviewState extends State<ContactPreview> {
   _ContactPreviewState(this.index);
   @override
   Widget build(BuildContext context) {
+    final contact = widget.contacts?[widget.index];
     return BlocBuilder<OrganisationBloc, OrganisationState>(
       builder: (context, state) {
         return Container(
@@ -39,22 +42,18 @@ class _ContactPreviewState extends State<ContactPreview> {
                   height: 10,
                 ),
                 Row(
-                  children: [
-                    Text("Name : "),
-                    Text('${state.org.contactDetails?[index]?.contactName}')
-                  ],
+                  children: [Text("Name : "), Text('${contact?.contactName}')],
                 ),
                 Row(
                   children: [
                     Text("Email : "),
-                    Text('${state.org.contactDetails?[index].contactEmail}')
+                    Text('${contact?.contactEmail}')
                   ],
                 ),
                 Row(
                   children: [
                     Text("Mobile Number : "),
-                    Text(
-                        '${state.org.contactDetails?[index].contactMobileNumber}')
+                    Text('${contact?.contactMobileNumber}')
                   ],
                 )
               ],

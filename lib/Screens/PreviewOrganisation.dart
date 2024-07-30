@@ -10,7 +10,7 @@ import 'package:organisations/Screens/AddressPreview.dart';
 import 'package:organisations/Screens/ContactPreview.dart';
 import 'package:organisations/Screens/FunctionPreview.dart';
 import 'package:organisations/Screens/OrganisationDocumentsPreview.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -66,28 +66,29 @@ class _PreviewOrganisationState extends State<PreviewOrganisation> {
                   _buildListSection(
                     context,
                     state.org.orgAddress!.length,
-                    (index) => AddressPreview(index),
+                    (index) => AddressPreview(index, state.org.orgAddress!),
                   ),
                 _buildSectionHeader(context, 'Contact Details'),
                 if (state.org.contactDetails != null)
                   _buildListSection(
                     context,
                     state.org.contactDetails!.length,
-                    (index) => ContactPreview(index),
+                    (index) => ContactPreview(index, state.org.contactDetails!),
                   ),
                 _buildSectionHeader(context, 'Functions'),
                 if (state.org.functions != null)
                   _buildListSection(
                     context,
                     state.org.functions!.length,
-                    (index) => FunctionPreview(index),
+                    (index) => FunctionPreview(index, state.org.functions!),
                   ),
                 _buildSectionHeader(context, 'Organisation Documents'),
                 if (state.org.documents != null)
                   _buildListSection(
                     context,
                     state.org.documents!.length,
-                    (index) => OrganisationDocumentsPreview(index),
+                    (index) => OrganisationDocumentsPreview(
+                        index, state.org.documents!),
                   ),
               ],
             );

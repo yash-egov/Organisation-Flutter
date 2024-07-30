@@ -8,7 +8,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -124,13 +124,14 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 BlocBuilder<OrganisationBloc, OrganisationState>(
                   builder: (context, state) {
-                    return ElevatedButton(
+                    return DigitButton(
+                      label: 'add Address',
                       onPressed: () {
                         context
                             .read<OrganisationBloc>()
                             .add(addOrganisationAddressEvent(address));
                       },
-                      child: Text('add Address'),
+                      type: ButtonType.secondary,
                     );
                   },
                 ),

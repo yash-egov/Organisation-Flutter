@@ -7,7 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -107,16 +107,15 @@ class _ContactFormState extends State<ContactForm> {
                 ),
                 BlocBuilder<OrganisationBloc, OrganisationState>(
                   builder: (context, state) {
-                    return ElevatedButton(
+                    return DigitButton(
                       onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          org.contactDetails?.add(contact);
-                          context
-                              .read<OrganisationBloc>()
-                              .add(addOrganisationContactDetailEvent(contact));
-                        }
+                        org.contactDetails?.add(contact);
+                        context
+                            .read<OrganisationBloc>()
+                            .add(addOrganisationContactDetailEvent(contact));
                       },
-                      child: Text('Submit'),
+                      label: 'Submit',
+                      type: ButtonType.secondary,
                     );
                   },
                 ),

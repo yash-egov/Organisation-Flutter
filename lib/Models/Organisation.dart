@@ -389,3 +389,8 @@ class Document {
     };
   }
 }
+
+class responseSearch {
+  String? ResponseInfo;
+  List<Organisation>? organisations;
+}

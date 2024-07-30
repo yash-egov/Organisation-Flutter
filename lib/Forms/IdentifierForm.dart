@@ -7,7 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
 
 @RoutePage()
@@ -79,13 +79,14 @@ class _IdentifierFormState extends State<IdentifierForm> {
                 // Add more fields if needed
                 BlocBuilder<OrganisationBloc, OrganisationState>(
                   builder: (context, state) {
-                    return ElevatedButton(
+                    return DigitButton(
                       onPressed: () {
                         context
                             .read<OrganisationBloc>()
                             .add(addOrganisationIdentifierEvent(identifier));
                       },
-                      child: Text('Add Identifier'),
+                      label: 'Add Identifier',
+                      type: ButtonType.secondary,
                     );
                   },
                 ),
@@ -100,6 +101,11 @@ class _IdentifierFormState extends State<IdentifierForm> {
               return DigitButton(
                 label: 'Next',
                 onPressed: () {
+                  context
+                      .read<OrganisationBloc>()
+                      .add(addOrganisationIdentifierEvent(identifier));
+
+                  // Pop the current route
                   AutoRouter.of(context).push(FunctionsForm(org: org));
                 },
                 type: ButtonType.primary,

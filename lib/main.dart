@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:location_app/bloc/bloc/city_lat_lon_bloc.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:organisations/bloc/organisation_bloc.dart';
+import 'package:organisations/bloc/allOrganisations/all_organisations_bloc.dart';
+import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 // import 'package:location_app/router/app_router.dart';
 import 'package:organisations/router/app_router.dart';
 
@@ -22,8 +23,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => OrganisationBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => OrganisationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AllOrganisationsBloc(),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
         debugShowCheckedModeBanner: false,
