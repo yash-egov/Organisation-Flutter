@@ -29,3 +29,13 @@ class OrganisationInitial extends OrganisationState {
 class OrganisationUpdated extends OrganisationState {
   OrganisationUpdated(Organisation org) : super(org);
 }
+
+class OrganisationSubmittedSuccess extends OrganisationState {
+  OrganisationSubmittedSuccess() : super(new Organisation());
+}
+
+class OrganisationSubmissionFailed extends OrganisationState {
+  final String error;
+
+  OrganisationSubmissionFailed(Organisation org, this.error) : super(org);
+}

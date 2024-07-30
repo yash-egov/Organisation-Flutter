@@ -33,3 +33,5 @@ class addOrganisationFunctionDocumentEvent extends OrganisationEvent {
   final int functionIndex;
   addOrganisationFunctionDocumentEvent(this.document, this.functionIndex);
 }
+
+class SubmitOrganisationEvent extends OrganisationEvent {}

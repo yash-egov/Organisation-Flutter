@@ -167,57 +167,18 @@ class _OrganisationFormState extends State<OrganisationForm> {
                 },
                 child: Text('add Functions'),
               ),
+              SizedBox(
+                height: 20,
+              ),
 
               BlocBuilder<OrganisationBloc, OrganisationState>(
                 builder: (context, state) {
                   return ElevatedButton(
                     onPressed: () {
-                      print("Org Address : ");
-
-                      for (int i = 0; i < state.org.orgAddress!.length; i++) {
-                        print(state.org.orgAddress?[i].tenantId);
-                        print(state.org.orgAddress?[i].doorNo);
-                      }
-                      print("Contact-Details");
-
-                      for (int i = 0;
-                          i < state.org.contactDetails!.length;
-                          i++) {
-                        print(state.org.contactDetails?[i].contactName);
-                        print(state.org.contactDetails?[i].contactMobileNumber);
-                        print(state.org.contactDetails?[i].contactEmail);
-                      }
-
-                      print("Identifiers : ");
-
-                      for (int i = 0; i < state.org.identifiers!.length; i++) {
-                        print(state.org.identifiers?[i].type);
-                        print(state.org.identifiers?[i].value);
-                      }
-
-                      print("Documents org : ");
-
-                      for (int i = 0; i < state.org.documents!.length; i++) {
-                        print(state.org.documents?[i].documentType);
-                        print(state.org.documents?[i].fileStore);
-                      }
-                      print(" org Functions : ");
-
-                      for (int i = 0; i < state.org.functions!.length; i++) {
-                        print(state.org.functions?[i].category);
-                        print(state.org.functions?[i].className);
-                        print(" org Functions Documents : ");
-
-                        for (int j = 0;
-                            j < (state.org.functions?[i]?.documents?.length)!;
-                            j++) {
-                          print(state
-                              .org.functions?[i].documents?[j].documentType);
-                          print(
-                              state.org.functions?[i].documents?[j]?.fileStore);
-                        }
-                      }
-                      AutoRouter.of(context).pop();
+                      context
+                          .read<OrganisationBloc>()
+                          .add(SubmitOrganisationEvent());
+                      AutoRouter.of(context).push(Home());
                     },
                     child: Text('Submit'),
                   );
