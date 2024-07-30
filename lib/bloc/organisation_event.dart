@@ -3,6 +3,13 @@ part of 'organisation_bloc.dart';
 @immutable
 class OrganisationEvent {}
 
+class addOrganisationBasicDetailsEvent extends OrganisationEvent {
+  final String? tenantId, name, applicationStatus, externalRefNumber;
+  final int? dateOfIncorporation;
+  addOrganisationBasicDetailsEvent(this.tenantId, this.name,
+      this.applicationStatus, this.externalRefNumber, this.dateOfIncorporation);
+}
+
 class addOrganisationAddressEvent extends OrganisationEvent {
   final Address address;
   addOrganisationAddressEvent(this.address);

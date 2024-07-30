@@ -8,6 +8,24 @@ part 'organisation_state.dart';
 
 class OrganisationBloc extends Bloc<OrganisationEvent, OrganisationState> {
   OrganisationBloc() : super(OrganisationInitial()) {
+    on<addOrganisationBasicDetailsEvent>((event, emit) {
+      final updatedOrg = Organisation(
+        tenantId: event.tenantId,
+        name: event.name,
+        applicationStatus: event.applicationStatus,
+        externalRefNumber: event.externalRefNumber,
+        dateOfIncorporation: event.dateOfIncorporation,
+        orgAddress: state.org.orgAddress,
+        contactDetails: state.org.contactDetails,
+        identifiers: state.org.identifiers,
+        functions: state.org.functions,
+        jurisdiction: state.org.jurisdiction,
+        isActive: state.org.isActive,
+        documents: state.org.documents,
+        additionalDetails: state.org.additionalDetails,
+      );
+      emit(OrganisationUpdated(updatedOrg));
+    });
     on<addOrganisationAddressEvent>((event, emit) {
       // print("Inside Add Address bloc -- ");
 

@@ -55,17 +55,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   charCount: true,
                   onChange: (value) => identifier.type = value,
                 ),
-                // TextFormField(
-                //   controller: _typeController,
-                //   decoration: InputDecoration(labelText: 'Type'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter type';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => identifier.type = value,
-                // ),
+
                 DigitTextFormInput(
                   label: "Value",
                   initialValue: '',
@@ -75,17 +65,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   charCount: true,
                   onChange: (value) => identifier.value = value,
                 ),
-                // TextFormField(
-                //   controller: _valueController,
-                //   decoration: InputDecoration(labelText: 'Value'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter value';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => identifier.value = value,
-                // ),
+
                 SwitchListTile(
                   title: Text("Is Active"),
                   value: _isActive,
@@ -97,19 +77,18 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   },
                 ),
                 // Add more fields if needed
-                // BlocBuilder<OrganisationBloc, OrganisationState>(
-                //   builder: (context, state) {
-                //     return ElevatedButton(
-                //       onPressed: () {
-                //         context
-                //             .read<OrganisationBloc>()
-                //             .add(addOrganisationIdentifierEvent(identifier));
-                //         AutoRouter.of(context).pop();
-                //       },
-                //       child: Text('Submit'),
-                //     );
-                //   },
-                // ),
+                BlocBuilder<OrganisationBloc, OrganisationState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<OrganisationBloc>()
+                            .add(addOrganisationIdentifierEvent(identifier));
+                      },
+                      child: Text('Add Identifier'),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -121,11 +100,6 @@ class _IdentifierFormState extends State<IdentifierForm> {
               return DigitButton(
                 label: 'Next',
                 onPressed: () {
-                  context
-                      .read<OrganisationBloc>()
-                      .add(addOrganisationIdentifierEvent(identifier));
-
-                  // Pop the current route
                   AutoRouter.of(context).push(FunctionsForm(org: org));
                 },
                 type: ButtonType.primary,

@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   digit_flutter_components: 1.0.0
+  # digit_components: 1.0.0
   build_runner: ^2.0.6
   auto_route_generator: ^6.0.1
   bloc:

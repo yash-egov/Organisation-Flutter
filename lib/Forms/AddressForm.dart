@@ -65,17 +65,6 @@ class _AddressFormState extends State<AddressForm> {
             key: _formKey,
             child: ListView(
               children: [
-                // TextFormField(
-                //   controller: _tenantIdController,
-                //   decoration: InputDecoration(labelText: 'Tenant ID'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter tenant ID';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => address.tenantId = value,
-                // ),
                 DigitTextFormInput(
                   label: "Tenant ID",
                   initialValue: '',
@@ -85,17 +74,6 @@ class _AddressFormState extends State<AddressForm> {
                   charCount: true,
                   onChange: (value) => address.tenantId = value,
                 ),
-                // TextFormField(
-                //   controller: _doorNoController,
-                //   decoration: InputDecoration(labelText: 'Door No'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter door number';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) => address.doorNo = value,
-                // ),
                 DigitTextFormInput(
                   label: "City",
                   initialValue: '',
@@ -114,7 +92,6 @@ class _AddressFormState extends State<AddressForm> {
                   charCount: true,
                   onChange: (value) => address.pincode = value,
                 ),
-
                 DigitTextFormInput(
                   label: "Door No",
                   initialValue: '',
@@ -142,6 +119,21 @@ class _AddressFormState extends State<AddressForm> {
                   charCount: true,
                   onChange: (value) => address.addressLine2 = value,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<OrganisationBloc, OrganisationState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<OrganisationBloc>()
+                            .add(addOrganisationAddressEvent(address));
+                      },
+                      child: Text('add Address'),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -153,9 +145,6 @@ class _AddressFormState extends State<AddressForm> {
               return DigitButton(
                 label: 'Next',
                 onPressed: () {
-                  context
-                      .read<OrganisationBloc>()
-                      .add(addOrganisationAddressEvent(address));
                   AutoRouter.of(context).push(ContactForm(org: org));
                 },
                 type: ButtonType.primary,

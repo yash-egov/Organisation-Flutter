@@ -137,57 +137,21 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 helpText: '',
                 onChange: (value) => functions.validTo = value as int?,
               ),
-              // TextFormField(
-              //   controller: _validToController,
-              //   decoration: InputDecoration(labelText: 'Valid To'),
-              //   keyboardType: TextInputType.number,
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter valid to date';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.validTo = int.parse(value),
-              // ),
-              // TextFormField(
-              //   controller: _applicationStatusController,
-              //   decoration: InputDecoration(labelText: 'Application Status'),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please enter application status';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (value) => functions.applicationStatus = value,
-              // ),
-              // BlocBuilder<OrganisationBloc, OrganisationState>(
-              //   builder: (context, state) {
-              //     return ElevatedButton(
-              //       onPressed: () {
-              //         AutoRouter.of(context).push(FunctionDocumentsForm(
-              //             functionIndex: (state.org.functions?.length)!,
-              //             function: functions));
-              //       },
-              //       child: Text('Add Function Documents'),
-              //     );
-              //   },
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // BlocBuilder<OrganisationBloc, OrganisationState>(
-              //   builder: (context, state) {
-              //     return ElevatedButton(
-              //       onPressed: () {
-              //         context
-              //             .read<OrganisationBloc>()
-              //             .add(addOrganisationFunctionEvent(functions));
-              //         AutoRouter.of(context).pop();
-              //       },
-              //       child: Text('Submit'),
-              //     );
-              //   },
-              // ),
+              SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<OrganisationBloc, OrganisationState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<OrganisationBloc>()
+                          .add(addOrganisationFunctionEvent(functions));
+                    },
+                    child: Text('Add Function'),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -199,10 +163,6 @@ class _FunctionsFormState extends State<FunctionsForm> {
             return DigitButton(
               label: 'Next',
               onPressed: () {
-                context
-                    .read<OrganisationBloc>()
-                    .add(addOrganisationFunctionEvent(functions));
-                //         AutoRouter.of(context).pop();
                 AutoRouter.of(context).push(DocumentsForm(org: org));
               },
               type: ButtonType.primary,

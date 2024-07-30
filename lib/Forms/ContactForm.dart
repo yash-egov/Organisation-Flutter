@@ -81,19 +81,7 @@ class _ContactFormState extends State<ContactForm> {
                     contact.contactName = value;
                   },
                 ),
-                // TextFormField(
-                //   controller: _contactMobileNumberController,
-                //   decoration: InputDecoration(labelText: 'Contact Mobile Number'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter contact mobile number';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) {
-                //     contact.contactMobileNumber = value;
-                //   },
-                // ),
+
                 DigitTextFormInput(
                   label: "Contact Mobile Number",
                   initialValue: '',
@@ -105,19 +93,7 @@ class _ContactFormState extends State<ContactForm> {
                     contact.contactMobileNumber = value;
                   },
                 ),
-                // TextFormField(
-                //   controller: _contactEmailController,
-                //   decoration: InputDecoration(labelText: 'Contact Email'),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter contact email';
-                //     }
-                //     return null;
-                //   },
-                //   onChanged: (value) {
-                //     contact.contactEmail = value;
-                //   },
-                // ),
+
                 DigitTextFormInput(
                   label: "Contact Email",
                   initialValue: '',
@@ -129,23 +105,21 @@ class _ContactFormState extends State<ContactForm> {
                     contact.contactEmail = value;
                   },
                 ),
-                // BlocBuilder<OrganisationBloc, OrganisationState>(
-                //   builder: (context, state) {
-                //     return ElevatedButton(
-                //       onPressed: () {
-                //         if (_formKey.currentState?.validate() ?? false) {
-                //           org.contactDetails?.add(contact);
-                //           context
-                //               .read<OrganisationBloc>()
-                //               .add(addOrganisationContactDetailEvent(contact));
-                //           // Pop the current route
-                //           AutoRouter.of(context).pop();
-                //         }
-                //       },
-                //       child: Text('Submit'),
-                //     );
-                //   },
-                // ),
+                BlocBuilder<OrganisationBloc, OrganisationState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          org.contactDetails?.add(contact);
+                          context
+                              .read<OrganisationBloc>()
+                              .add(addOrganisationContactDetailEvent(contact));
+                        }
+                      },
+                      child: Text('Submit'),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -157,10 +131,6 @@ class _ContactFormState extends State<ContactForm> {
               return DigitButton(
                 label: 'Next',
                 onPressed: () {
-                  context
-                      .read<OrganisationBloc>()
-                      .add(addOrganisationContactDetailEvent(contact));
-                  // Pop the current route
                   AutoRouter.of(context).push(IdentifierForm(org: org));
                 },
                 type: ButtonType.primary,

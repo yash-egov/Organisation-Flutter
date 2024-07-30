@@ -89,19 +89,18 @@ class _DocumentsFormState extends State<DocumentsForm> {
                 ),
 
                 // Add more fields if needed
-                // BlocBuilder<OrganisationBloc, OrganisationState>(
-                //   builder: (context, state) {
-                //     return ElevatedButton(
-                //       onPressed: () {
-                //         context
-                //             .read<OrganisationBloc>()
-                //             .add(addOrganisationDocumentEvent(document));
-                //         AutoRouter.of(context).pop();
-                //       },
-                //       child: Text('Submit'),
-                //     );
-                //   },
-                // ),
+                BlocBuilder<OrganisationBloc, OrganisationState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<OrganisationBloc>()
+                            .add(addOrganisationDocumentEvent(document));
+                      },
+                      child: Text('Add Document'),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -113,10 +112,6 @@ class _DocumentsFormState extends State<DocumentsForm> {
               return DigitButton(
                 label: 'Next',
                 onPressed: () {
-                  context
-                      .read<OrganisationBloc>()
-                      .add(addOrganisationDocumentEvent(document));
-                  // Pop the current route
                   AutoRouter.of(context).push(PreviewOrganisation());
                 },
                 type: ButtonType.primary,
