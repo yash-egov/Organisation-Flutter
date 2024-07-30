@@ -1,8 +1,13 @@
+import 'package:digit_flutter_components/enum/app_enums.dart';
+import 'package:digit_flutter_components/theme/digit_theme.dart';
+import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
+import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
 import 'package:flutter/material.dart';
 // import 'package:organisations/Forms/AddressForm.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:organisations/Constants/text.dart';
 
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc.dart';
@@ -34,166 +39,231 @@ class _OrganisationFormState extends State<OrganisationForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Organisation Form"),
+        toolbarHeight: MyFontStyle.appbarHeight,
+        backgroundColor: DigitTheme.instance.colorScheme.secondary,
+        title: Text(
+          "Organisation Form",
+          style: DigitTheme.instance.mobileTypography.headingL,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: ListView(
+            padding: EdgeInsets.all(20),
             children: [
-              TextFormField(
+              // TextFormField(
+              //   controller: _tenantIdController,
+              //   decoration: InputDecoration(labelText: 'Tenant ID'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter tenant ID';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     org.tenantId = value;
+              //   },
+              // ),
+              DigitTextFormInput(
+                label: "Tenant ID",
+                initialValue: '',
                 controller: _tenantIdController,
-                decoration: InputDecoration(labelText: 'Tenant ID'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter tenant ID';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
+                innerLabel: '',
+                helpText: 'e.g pb.amritsar',
+                charCount: true,
+                onChange: (value) {
                   org.tenantId = value;
                 },
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _nameController,
+              //   decoration: InputDecoration(labelText: 'Name'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter name';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     org.name = value;
+              //   },
+              // ),
+              DigitTextFormInput(
+                label: "Name",
+                initialValue: '',
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter name';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
+                innerLabel: '',
+                helpText: 'e.g EGov',
+                charCount: true,
+                onChange: (value) {
                   org.name = value;
                 },
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _applicationStatusController,
+              //   decoration: InputDecoration(labelText: 'Application Status'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter application status';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     org.applicationStatus = value;
+              //   },
+              // ),
+              DigitTextFormInput(
+                label: "Application Status",
+                initialValue: '',
                 controller: _applicationStatusController,
-                decoration: InputDecoration(labelText: 'Application Status'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter application status';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
+                innerLabel: '',
+                helpText: 'e.g apply',
+                charCount: true,
+                onChange: (value) {
                   org.applicationStatus = value;
                 },
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _externalRefNumberController,
+              //   decoration: InputDecoration(labelText: 'External Ref Number'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter external ref number';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     org.externalRefNumber = value;
+              //   },
+              // ),
+              DigitTextFormInput(
+                label: "External Ref Number",
+                initialValue: '',
                 controller: _externalRefNumberController,
-                decoration: InputDecoration(labelText: 'External Ref Number'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter external ref number';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
+                innerLabel: '',
+                helpText: 'e.g ref',
+                charCount: true,
+                onChange: (value) {
                   org.externalRefNumber = value;
                 },
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _dateOfIncorporationController,
+              //   decoration: InputDecoration(labelText: 'Date of Incorporation'),
+              //   keyboardType: TextInputType.number,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter date of incorporation';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     org.dateOfIncorporation = value as int;
+              //   },
+              // ),
+              DigitTextFormInput(
+                label: "Date of Incorporation",
+                initialValue: '',
                 controller: _dateOfIncorporationController,
-                decoration: InputDecoration(labelText: 'Date of Incorporation'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter date of incorporation';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
+                innerLabel: '',
+                helpText: 'e.g Date',
+                charCount: true,
+                onChange: (value) {
                   org.dateOfIncorporation = value as int;
                 },
               ),
-              // Add more fields for other parts of the JSON structure
-              // ..._addressForms.map((addressForm) => addressForm).toList(),
-              // AddressForm(),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(AddressForm(org: org));
-                },
-                child: Text('add Address'),
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(ContactForm(org: org));
-                  // print(org.contactDetails?[0].contactName);
-                },
-                child: Text('add Contact Details'),
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(IdentifierForm(org: org));
-                  // print(org.identifiers?[0].value);
-                },
-                child: Text('add Identifiers Details'),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(DocumentsForm(org: org));
-                  // print(org.identifiers?[0].value);
-                },
-                child: Text('add Org Documents'),
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(FunctionsForm(org: org));
-                  // print(org.identifiers?[0].value);
-                },
-                child: Text('add Functions'),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              BlocBuilder<OrganisationBloc, OrganisationState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<OrganisationBloc>()
-                          .add(SubmitOrganisationEvent());
-                      AutoRouter.of(context).push(Home());
-                    },
-                    child: Text('Submit'),
-                  );
-                },
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // DigitButton(
+              //   // width: 90,
+              //   suffixIcon: Icons.add,
+              //   label: 'add Address',
+              //   onPressed: () {
+              //     AutoRouter.of(context).push(AddressForm(org: org));
+              //   },
+              //   type: ButtonType.primary,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // DigitButton(
+              //   suffixIcon: Icons.add,
+              //   label: 'add Contact Details',
+              //   onPressed: () {
+              //     AutoRouter.of(context).push(ContactForm(org: org));
+              //   },
+              //   type: ButtonType.primary,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // DigitButton(
+              //   suffixIcon: Icons.add,
+              //   label: 'add Identifiers Details',
+              //   onPressed: () {
+              //     AutoRouter.of(context).push(IdentifierForm(org: org));
+              //   },
+              //   type: ButtonType.primary,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // DigitButton(
+              //   suffixIcon: Icons.add,
+              //   label: 'add Org Documents',
+              //   onPressed: () {
+              //     AutoRouter.of(context).push(DocumentsForm(org: org));
+              //   },
+              //   type: ButtonType.primary,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // DigitButton(
+              //   suffixIcon: Icons.add,
+              //   label: 'add Functions',
+              //   onPressed: () {
+              //     AutoRouter.of(context).push(FunctionsForm(org: org));
+              //   },
+              //   type: ButtonType.primary,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // BlocBuilder<OrganisationBloc, OrganisationState>(
+              //   builder: (context, state) {
+              //     return DigitButton(
+              //       // suffixIcon: Icons.add,
+              //       label: 'Submit',
+              //       onPressed: () {
+              // context
+              //     .read<OrganisationBloc>()
+              //     .add(SubmitOrganisationEvent());
+              //         AutoRouter.of(context).push(Home());
+              //       },
+              //       type: ButtonType.primary,
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        child: DigitButton(
+          // width: 90,
+          // suffixIcon: Icons.next_plan,
+          label: 'Next',
+          onPressed: () {
+            AutoRouter.of(context).push(AddressForm(org: org));
+          },
+          type: ButtonType.primary,
+        ),
+      ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: OrganisationForm(),
-  ));
 }

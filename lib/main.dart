@@ -1,3 +1,4 @@
+import 'package:digit_flutter_components/theme/digit_theme.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:location_app/bloc/bloc/city_lat_lon_bloc.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
         debugShowCheckedModeBanner: false,
+        // theme: DigitTheme.instance.mobileTheme,
       ),
     );
   }

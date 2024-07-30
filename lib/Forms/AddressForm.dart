@@ -1,7 +1,12 @@
+import 'package:digit_flutter_components/enum/app_enums.dart';
+import 'package:digit_flutter_components/theme/digit_theme.dart';
+import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
+import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
@@ -46,58 +51,117 @@ class _AddressFormState extends State<AddressForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Address Form"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _tenantIdController,
-                decoration: InputDecoration(labelText: 'Tenant ID'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter tenant ID';
-                  }
-                  return null;
-                },
-                onChanged: (value) => address.tenantId = value,
-              ),
-              TextFormField(
-                controller: _doorNoController,
-                decoration: InputDecoration(labelText: 'Door No'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter door number';
-                  }
-                  return null;
-                },
-                onChanged: (value) => address.doorNo = value,
-              ),
-              // Add more fields for other address attributes
-              BlocBuilder<OrganisationBloc, OrganisationState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      // print(address.doorNo);
-                      // org.orgAddress?.add(address);
-                      // context.read<CityWeatherBloc>().state.data
-                      context
-                          .read<OrganisationBloc>()
-                          .add(addOrganisationAddressEvent(address));
-                      AutoRouter.of(context).pop();
-                    },
-                    child: Text('Submit'),
-                  );
-                },
-              ),
-            ],
+        appBar: AppBar(
+          toolbarHeight: MyFontStyle.appbarHeight,
+          backgroundColor: DigitTheme.instance.colorScheme.secondary,
+          title: Text(
+            "Address Form",
+            style: DigitTheme.instance.mobileTypography.headingL,
           ),
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                // TextFormField(
+                //   controller: _tenantIdController,
+                //   decoration: InputDecoration(labelText: 'Tenant ID'),
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return 'Please enter tenant ID';
+                //     }
+                //     return null;
+                //   },
+                //   onChanged: (value) => address.tenantId = value,
+                // ),
+                DigitTextFormInput(
+                  label: "Tenant ID",
+                  initialValue: '',
+                  controller: _tenantIdController,
+                  innerLabel: '',
+                  helpText: 'e.g pb.amritsar',
+                  charCount: true,
+                  onChange: (value) => address.tenantId = value,
+                ),
+                // TextFormField(
+                //   controller: _doorNoController,
+                //   decoration: InputDecoration(labelText: 'Door No'),
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return 'Please enter door number';
+                //     }
+                //     return null;
+                //   },
+                //   onChanged: (value) => address.doorNo = value,
+                // ),
+                DigitTextFormInput(
+                  label: "City",
+                  initialValue: '',
+                  controller: _cityController,
+                  innerLabel: '',
+                  helpText: '',
+                  charCount: true,
+                  onChange: (value) => address.city = value,
+                ),
+                DigitTextFormInput(
+                  label: "Pin code",
+                  initialValue: '',
+                  controller: _pincodeController,
+                  innerLabel: '',
+                  helpText: '',
+                  charCount: true,
+                  onChange: (value) => address.pincode = value,
+                ),
+
+                DigitTextFormInput(
+                  label: "Door No",
+                  initialValue: '',
+                  controller: _doorNoController,
+                  innerLabel: '',
+                  helpText: '',
+                  charCount: true,
+                  onChange: (value) => address.doorNo = value,
+                ),
+                DigitTextFormInput(
+                  label: "Address Line 1",
+                  initialValue: '',
+                  controller: _addressLine1Controller,
+                  innerLabel: '',
+                  helpText: '',
+                  charCount: true,
+                  onChange: (value) => address.addressLine1 = value,
+                ),
+                DigitTextFormInput(
+                  label: "Address Line 2",
+                  initialValue: '',
+                  controller: _addressLine2Controller,
+                  innerLabel: '',
+                  helpText: '',
+                  charCount: true,
+                  onChange: (value) => address.addressLine2 = value,
+                ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: SizedBox(
+          height: 50,
+          child: BlocBuilder<OrganisationBloc, OrganisationState>(
+            builder: (context, state) {
+              return DigitButton(
+                label: 'Next',
+                onPressed: () {
+                  context
+                      .read<OrganisationBloc>()
+                      .add(addOrganisationAddressEvent(address));
+                  AutoRouter.of(context).push(ContactForm(org: org));
+                },
+                type: ButtonType.primary,
+              );
+            },
+          ),
+        ));
   }
 }

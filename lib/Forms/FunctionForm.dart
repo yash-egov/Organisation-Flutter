@@ -1,6 +1,10 @@
+import 'package:digit_flutter_components/digit_components.dart';
+import 'package:digit_flutter_components/enum/app_enums.dart';
+import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:organisations/Constants/text.dart';
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
@@ -34,7 +38,12 @@ class _FunctionsFormState extends State<FunctionsForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Functions Form"),
+        toolbarHeight: MyFontStyle.appbarHeight,
+        backgroundColor: DigitTheme.instance.colorScheme.secondary,
+        title: Text(
+          "Functions Form",
+          style: DigitTheme.instance.mobileTypography.headingL,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,104 +51,163 @@ class _FunctionsFormState extends State<FunctionsForm> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
+              DigitTextFormInput(
+                label: "Type",
+                initialValue: '',
                 controller: _typeController,
-                decoration: InputDecoration(labelText: 'Type'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter type';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.type = value,
+                innerLabel: '',
+                helpText: '',
+                charCount: true,
+                onChange: (value) => functions.type = value,
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _typeController,
+              //   decoration: InputDecoration(labelText: 'Type'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter type';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.type = value,
+              // ),
+              DigitTextFormInput(
+                label: "Category",
+                initialValue: '',
                 controller: _categoryController,
-                decoration: InputDecoration(labelText: 'Category'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter category';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.category = value,
+                innerLabel: '',
+                helpText: '',
+                charCount: true,
+                onChange: (value) => functions.category = value,
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _categoryController,
+              //   decoration: InputDecoration(labelText: 'Category'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter category';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.category = value,
+              // ),
+              // TextFormField(
+              //   controller: _classController,
+              //   decoration: InputDecoration(labelText: 'Class'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter class';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.className = value,
+              // ),
+              DigitTextFormInput(
+                label: "Class",
+                initialValue: '',
                 controller: _classController,
-                decoration: InputDecoration(labelText: 'Class'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter class';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.className = value,
+                innerLabel: '',
+                helpText: '',
+                charCount: true,
+                onChange: (value) => functions.className = value,
               ),
-              TextFormField(
+              // TextFormField(
+              //   controller: _validFromController,
+              //   decoration: InputDecoration(labelText: 'Valid From'),
+              //   keyboardType: TextInputType.number,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter valid from date';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.validFrom = int.parse(value),
+              // ),
+              DigitDateFormInput(
+                label: "Valid From",
                 controller: _validFromController,
-                decoration: InputDecoration(labelText: 'Valid From'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter valid from date';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.validFrom = int.parse(value),
+                innerLabel: '',
+                helpText: '',
+                onChange: (value) => functions.validFrom = value as int?,
               ),
-              TextFormField(
+              DigitDateFormInput(
+                label: "Valid To",
                 controller: _validToController,
-                decoration: InputDecoration(labelText: 'Valid To'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter valid to date';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.validTo = int.parse(value),
+                innerLabel: '',
+                helpText: '',
+                onChange: (value) => functions.validTo = value as int?,
               ),
-              TextFormField(
-                controller: _applicationStatusController,
-                decoration: InputDecoration(labelText: 'Application Status'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter application status';
-                  }
-                  return null;
-                },
-                onChanged: (value) => functions.applicationStatus = value,
-              ),
-              BlocBuilder<OrganisationBloc, OrganisationState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      AutoRouter.of(context).push(FunctionDocumentsForm(
-                          functionIndex: (state.org.functions?.length)!,
-                          function: functions));
-                    },
-                    child: Text('Add Function Documents'),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              BlocBuilder<OrganisationBloc, OrganisationState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<OrganisationBloc>()
-                          .add(addOrganisationFunctionEvent(functions));
-                      AutoRouter.of(context).pop();
-                    },
-                    child: Text('Submit'),
-                  );
-                },
-              ),
+              // TextFormField(
+              //   controller: _validToController,
+              //   decoration: InputDecoration(labelText: 'Valid To'),
+              //   keyboardType: TextInputType.number,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter valid to date';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.validTo = int.parse(value),
+              // ),
+              // TextFormField(
+              //   controller: _applicationStatusController,
+              //   decoration: InputDecoration(labelText: 'Application Status'),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter application status';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) => functions.applicationStatus = value,
+              // ),
+              // BlocBuilder<OrganisationBloc, OrganisationState>(
+              //   builder: (context, state) {
+              //     return ElevatedButton(
+              //       onPressed: () {
+              //         AutoRouter.of(context).push(FunctionDocumentsForm(
+              //             functionIndex: (state.org.functions?.length)!,
+              //             function: functions));
+              //       },
+              //       child: Text('Add Function Documents'),
+              //     );
+              //   },
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // BlocBuilder<OrganisationBloc, OrganisationState>(
+              //   builder: (context, state) {
+              //     return ElevatedButton(
+              //       onPressed: () {
+              //         context
+              //             .read<OrganisationBloc>()
+              //             .add(addOrganisationFunctionEvent(functions));
+              //         AutoRouter.of(context).pop();
+              //       },
+              //       child: Text('Submit'),
+              //     );
+              //   },
+              // ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        child: BlocBuilder<OrganisationBloc, OrganisationState>(
+          builder: (context, state) {
+            return DigitButton(
+              label: 'Next',
+              onPressed: () {
+                context
+                    .read<OrganisationBloc>()
+                    .add(addOrganisationFunctionEvent(functions));
+                //         AutoRouter.of(context).pop();
+                AutoRouter.of(context).push(DocumentsForm(org: org));
+              },
+              type: ButtonType.primary,
+            );
+          },
         ),
       ),
     );
