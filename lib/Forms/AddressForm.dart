@@ -1,10 +1,7 @@
 import 'package:digit_flutter_components/enum/app_enums.dart';
 import 'package:digit_flutter_components/theme/digit_theme.dart';
-import 'package:digit_flutter_components/utils/validators/validator.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
-import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
 import 'package:flutter/material.dart';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
@@ -12,37 +9,39 @@ import 'package:organisations/Models/Address.dart';
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 @RoutePage()
-class AddressForm extends StatefulWidget {
+class AddressForm extends StatelessWidget {
   final Organisation org;
 
   AddressForm({required this.org});
 
-  @override
-  _AddressFormState createState() => _AddressFormState(org);
-}
+  // Define the form group and its controls
+  final form = FormGroup({
+    'tenantId': FormControl<String>(
+      validators: [
+        Validators.required,
+      ],
+    ),
+    'city': FormControl<String>(
+      validators: [
+        Validators.required,
+      ],
+    ),
+    'pincode': FormControl<String>(
+      validators: [
+        Validators.required,
+        Validators.pattern(r'^\d{6}$'),
+      ],
+    ),
+    'doorNo': FormControl<String>(),
+    'addressLine1': FormControl<String>(),
+    'addressLine2': FormControl<String>(),
+  });
 
-class _AddressFormState extends State<AddressForm> {
-  final Organisation org;
-  _AddressFormState(this.org);
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _tenantIdController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _pincodeController = TextEditingController();
-  final TextEditingController _doorNoController = TextEditingController();
-  final TextEditingController _addressLine1Controller = TextEditingController();
-  final TextEditingController _addressLine2Controller = TextEditingController();
-  Address address = Address();
-
-  bool IsAddressValid(Address add) {
-    if (add.tenantId == null ||
-        (add.tenantId?.length == 0) ||
-        add.city == null ||
-        add.city?.length == 0 ||
-        add?.pincode == null ||
-        (add?.pincode?.length != 6)) return false;
-    return true;
+  bool isAddressValid(FormGroup form) {
+    return form.valid;
   }
 
   @override
@@ -58,83 +57,68 @@ class _AddressFormState extends State<AddressForm> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+        child: ReactiveForm(
+          formGroup: form,
           child: ListView(
             children: [
-              DigitTextFormInput(
-                label: "Tenant ID",
-                initialValue: '',
-                controller: _tenantIdController,
-                innerLabel: '',
-                helpText: 'e.g pb.amritsar',
-                charCount: true,
-                onChange: (value) => address.tenantId = value,
-                isRequired: true,
-                validations: [
-                  Validator(ValidatorType.required, null,
-                      errorMessage: 'Tenant ID is required'),
-                  // Validator(ValidatorType.pattern, r'^[a-zA-Z]+\.[a-zA-Z]+$',
-                  // errorMessage: 'Invalid Tenant ID format'),
-                ],
+              ReactiveTextField<String>(
+                formControlName: 'tenantId',
+                decoration: InputDecoration(
+                    labelText: 'Tenant ID',
+                    hintText: 'e.g pb.amritsar',
+                    border: OutlineInputBorder()),
+                validationMessages: {
+                  ValidationMessage.required: (error) =>
+                      "Tenant ID is required",
+                },
               ),
-              DigitTextFormInput(
-                label: "City",
-                initialValue: '',
-                controller: _cityController,
-                innerLabel: '',
-                helpText: '',
-                charCount: true,
-                onChange: (value) => address.city = value,
-                isRequired: true,
-                validations: [
-                  Validator(ValidatorType.required, null,
-                      errorMessage: 'City is required'),
-                ],
+              SizedBox(
+                height: 15,
               ),
-              DigitTextFormInput(
-                label: "Pin code",
-                initialValue: '',
-                controller: _pincodeController,
-                innerLabel: '',
-                helpText: '',
-                charCount: true,
-                onChange: (value) => address.pincode = value,
-                isRequired: true,
-                validations: [
-                  Validator(ValidatorType.required, null,
-                      errorMessage: 'Pin code is required'),
-                  Validator(ValidatorType.pattern, r'^\d{6}$',
-                      errorMessage:
-                          'Invalid Pin code format .. it should be of length 6'),
-                ],
+              ReactiveTextField<String>(
+                formControlName: 'city',
+                decoration: InputDecoration(
+                    labelText: 'City', border: OutlineInputBorder()),
+                validationMessages: {
+                  ValidationMessage.required: (error) => "City is required",
+                },
               ),
-              DigitTextFormInput(
-                label: "Door No",
-                initialValue: '',
-                controller: _doorNoController,
-                innerLabel: '',
-                helpText: '',
-                charCount: true,
-                onChange: (value) => address.doorNo = value,
+              SizedBox(
+                height: 15,
               ),
-              DigitTextFormInput(
-                label: "Address Line 1",
-                initialValue: '',
-                controller: _addressLine1Controller,
-                innerLabel: '',
-                helpText: '',
-                charCount: true,
-                onChange: (value) => address.addressLine1 = value,
+              ReactiveTextField<String>(
+                formControlName: 'pincode',
+                decoration: InputDecoration(
+                    labelText: 'Pin code', border: OutlineInputBorder()),
+                validationMessages: {
+                  ValidationMessage.required: (error) => "Pin code is required",
+                  ValidationMessage.pattern: (error) =>
+                      "Invalid Pin code format. It should be of length 6",
+                },
               ),
-              DigitTextFormInput(
-                label: "Address Line 2",
-                initialValue: '',
-                controller: _addressLine2Controller,
-                innerLabel: '',
-                helpText: '',
-                charCount: true,
-                onChange: (value) => address.addressLine2 = value,
+              SizedBox(
+                height: 15,
+              ),
+              ReactiveTextField<String>(
+                formControlName: 'doorNo',
+                decoration: InputDecoration(
+                    labelText: 'Door No', border: OutlineInputBorder()),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ReactiveTextField<String>(
+                formControlName: 'addressLine1',
+                decoration: InputDecoration(
+                    labelText: 'Address Line 1', border: OutlineInputBorder()),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ReactiveTextField<String>(
+                formControlName: 'addressLine2',
+                decoration: InputDecoration(
+                    labelText: 'Address Line 2', border: OutlineInputBorder()),
               ),
               SizedBox(height: 20),
               BlocBuilder<OrganisationBloc, OrganisationState>(
@@ -142,30 +126,32 @@ class _AddressFormState extends State<AddressForm> {
                   return DigitButton(
                     label: 'Add Address',
                     onPressed: () {
-                      // Validate the form
-                      if (IsAddressValid(address)) {
-                        // Add to bloc only if the form is valid
+                      if (form.valid) {
+                        final address = Address(
+                          tenantId: form.control('tenantId').value,
+                          city: form.control('city').value,
+                          pincode: form.control('pincode').value,
+                          doorNo: form.control('doorNo').value,
+                          addressLine1: form.control('addressLine1').value,
+                          addressLine2: form.control('addressLine2').value,
+                        );
                         context
                             .read<OrganisationBloc>()
                             .add(addOrganisationAddressEvent(address));
-
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.green,
-                            content: Text(' Address Added SuccessFully'),
-                            duration: Duration(
-                                seconds:
-                                    2), // The duration for which the snackbar is displayed
+                            content: Text('Address Added Successfully'),
+                            duration: Duration(seconds: 2),
                           ),
                         );
                       } else {
+                        form.markAllAsTouched();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.red,
                             content: Text('Invalid Address Details'),
-                            duration: Duration(
-                                seconds:
-                                    2), // The duration for which the snackbar is displayed
+                            duration: Duration(seconds: 2),
                           ),
                         );
                       }
@@ -185,10 +171,7 @@ class _AddressFormState extends State<AddressForm> {
             return DigitButton(
               label: 'Next',
               onPressed: () {
-                // Validate the form before proceeding to the next screen
-                if (_formKey.currentState?.validate() ?? false) {
-                  AutoRouter.of(context).push(ContactForm(org: org));
-                }
+                AutoRouter.of(context).push(ContactForm(org: org));
               },
               type: ButtonType.primary,
             );
