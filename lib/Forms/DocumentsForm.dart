@@ -133,7 +133,7 @@ class _DocumentsFormState extends State<DocumentsForm> {
                 label: 'Next',
                 onPressed: () {
                   AutoRouter.of(context).push(PreviewOrganisation(
-                      screen: "Preview Page", org: state.org));
+                      screen: "Preview Page", org: state.org, preview: true));
                 },
                 type: ButtonType.primary,
               );

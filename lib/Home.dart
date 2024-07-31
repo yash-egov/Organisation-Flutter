@@ -20,8 +20,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    double buttonMarginLR = MediaQuery.sizeOf(context).width / 8;
-    double buttonMarginBottom = MediaQuery.sizeOf(context).height / 10;
+    double width = MediaQuery.sizeOf(context).width;
+    double crossAxisSpacing = 16.0;
+    double mainAxisSpacing = 16.0;
+    int crossAxisCount =
+        (width ~/ 300); // Number of columns based on screen width
 
     return Scaffold(
       appBar: AppBar(
@@ -36,46 +39,78 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 100,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
-              margin: EdgeInsets.fromLTRB(
-                  buttonMarginLR, 0, buttonMarginLR, buttonMarginBottom),
-              child: BlocBuilder<AllOrganisationsBloc, AllOrganisationsState>(
-                builder: (context, state) {
-                  return DigitButton(
-                    label: 'View All Organisations',
-                    onPressed: () {
-                      context
-                          .read<AllOrganisationsBloc>()
-                          .add(getAllOrganisationsEvent());
-                      AutoRouter.of(context).push(AllOrganisations());
-                    },
-                    type: ButtonType.primary,
-                  );
-                },
+      body: Padding(
+        padding: const EdgeInsets.all(100.0), // Adjusted padding
+        child: GridView.builder(
+          itemCount: 2, // Number of grid items
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            crossAxisSpacing: crossAxisSpacing,
+            mainAxisSpacing: mainAxisSpacing,
+            childAspectRatio: 1, // Ensures the items are square
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 10, // Adds shadow to the card
+              // color: Color.fromARGB(255, 240, 174, 74),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20), // Rounded corners
               ),
-            ),
-            Container(
-              height: 100,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
-              margin: EdgeInsets.fromLTRB(
-                  buttonMarginLR, 0, buttonMarginLR, buttonMarginBottom),
-              child: DigitButton(
-                label: 'Register Organisation',
-                onPressed: () {
-                  AutoRouter.of(context).push(OrganisationForm());
+              child: InkWell(
+                onTap: () {
+                  if (index == 0) {
+                    context
+                        .read<AllOrganisationsBloc>()
+                        .add(getAllOrganisationsEvent());
+                    AutoRouter.of(context).push(AllOrganisations());
+                  } else if (index == 1) {
+                    AutoRouter.of(context).push(OrganisationForm());
+                  }
                 },
-                type: ButtonType.primary,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: index == 0
+                          ? Icon(
+                              Icons.view_headline_outlined,
+                              size: 50,
+                              color: Colors.green,
+                            )
+                          : Icon(
+                              Icons.create,
+                              size: 50,
+                              color: Colors.green,
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(
+                          16.0), // Padding around the button
+                      child: DigitButton(
+                        label: index == 0
+                            ? 'View All Organisations'
+                            : 'Register Organisation',
+                        onPressed: () {
+                          if (index == 0) {
+                            context
+                                .read<AllOrganisationsBloc>()
+                                .add(getAllOrganisationsEvent());
+                            AutoRouter.of(context).push(AllOrganisations());
+                          } else if (index == 1) {
+                            AutoRouter.of(context).push(OrganisationForm());
+                          }
+                        },
+                        type: ButtonType
+                            .tertiary, // Adjusted button type for consistency
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+            );
+          },
         ),
       ),
     );

@@ -151,6 +151,7 @@ class _AddressFormState extends State<AddressForm> {
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.green,
                             content: Text(' Address Added SuccessFully'),
                             duration: Duration(
                                 seconds:
@@ -160,6 +161,7 @@ class _AddressFormState extends State<AddressForm> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.red,
                             content: Text('Invalid Address Details'),
                             duration: Duration(
                                 seconds:

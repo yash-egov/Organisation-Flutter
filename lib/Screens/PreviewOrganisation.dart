@@ -18,17 +18,19 @@ import 'package:organisations/router/app_router.gr.dart';
 class PreviewOrganisation extends StatefulWidget {
   Organisation org;
   String screen;
-  PreviewOrganisation(this.screen, this.org, {super.key});
+  bool preview;
+  PreviewOrganisation(this.screen, this.org, this.preview, {super.key});
 
   @override
   State<PreviewOrganisation> createState() =>
-      _PreviewOrganisationState(screen, org);
+      _PreviewOrganisationState(screen, org, preview);
 }
 
 class _PreviewOrganisationState extends State<PreviewOrganisation> {
   String screen;
   Organisation org;
-  _PreviewOrganisationState(this.screen, this.org);
+  bool preview;
+  _PreviewOrganisationState(this.screen, this.org, this.preview);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

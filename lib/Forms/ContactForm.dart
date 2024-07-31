@@ -128,11 +128,10 @@ class _ContactFormState extends State<ContactForm> {
                         context
                             .read<OrganisationBloc>()
                             .add(addOrganisationContactDetailEvent(contact));
-
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content:
-                                Text(' Contact Details Added SuccessFully'),
+                            backgroundColor: Colors.green,
+                            content: Text('Contact Added SuccessFully'),
                             duration: Duration(
                                 seconds:
                                     2), // The duration for which the snackbar is displayed
@@ -141,6 +140,7 @@ class _ContactFormState extends State<ContactForm> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.red,
                             content: Text('Invalid Contact Details'),
                             duration: Duration(
                                 seconds:
@@ -159,21 +159,14 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
       bottomNavigationBar: SizedBox(
-        height: 50,
-        child: BlocBuilder<OrganisationBloc, OrganisationState>(
-          builder: (context, state) {
-            return DigitButton(
-              label: 'Next',
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  AutoRouter.of(context).push(IdentifierForm(org: org));
-                }
-              },
-              type: ButtonType.primary,
-            );
-          },
-        ),
-      ),
+          height: 50,
+          child: DigitButton(
+            label: 'Next',
+            onPressed: () {
+              AutoRouter.of(context).push(IdentifierForm(org: org));
+            },
+            type: ButtonType.primary,
+          )),
     );
   }
 }

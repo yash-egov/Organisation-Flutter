@@ -96,6 +96,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: _i10.PreviewOrganisation(
           args.screen,
           args.org,
+          args.preview,
           key: args.key,
         ),
       );
@@ -330,6 +331,7 @@ class PreviewOrganisation extends _i13.PageRouteInfo<PreviewOrganisationArgs> {
   PreviewOrganisation({
     required String screen,
     required _i14.Organisation org,
+    required bool preview,
     _i15.Key? key,
     List<_i13.PageRouteInfo>? children,
   }) : super(
@@ -337,6 +339,7 @@ class PreviewOrganisation extends _i13.PageRouteInfo<PreviewOrganisationArgs> {
           args: PreviewOrganisationArgs(
             screen: screen,
             org: org,
+            preview: preview,
             key: key,
           ),
           initialChildren: children,
@@ -352,6 +355,7 @@ class PreviewOrganisationArgs {
   const PreviewOrganisationArgs({
     required this.screen,
     required this.org,
+    required this.preview,
     this.key,
   });
 
@@ -359,11 +363,13 @@ class PreviewOrganisationArgs {
 
   final _i14.Organisation org;
 
+  final bool preview;
+
   final _i15.Key? key;
 
   @override
   String toString() {
-    return 'PreviewOrganisationArgs{screen: $screen, org: $org, key: $key}';
+    return 'PreviewOrganisationArgs{screen: $screen, org: $org, preview: $preview, key: $key}';
   }
 }
 

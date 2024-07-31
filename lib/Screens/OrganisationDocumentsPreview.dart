@@ -24,7 +24,7 @@ class _OrganisationDocumentsPreviewState
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Card(
         elevation: 10,
-        color: const Color.fromARGB(255, 230, 224, 224),
+        // color: const Color.fromARGB(255, 230, 224, 224),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

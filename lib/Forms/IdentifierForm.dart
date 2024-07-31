@@ -100,6 +100,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              backgroundColor: Colors.green,
                               content: Text(
                                   ' Identifier Details Added SuccessFully'),
                               duration: Duration(
@@ -110,6 +111,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              backgroundColor: Colors.red,
                               content: Text('Empty Identifier Details '),
                               duration: Duration(
                                   seconds:

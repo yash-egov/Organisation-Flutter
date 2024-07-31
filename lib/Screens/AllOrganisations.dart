@@ -110,13 +110,14 @@ class _AllOrganisationsState extends State<AllOrganisations> {
                     onPressed: () {
                       AutoRouter.of(context).push(PreviewOrganisation(
                           screen: state.allOrganisations[index].name!,
-                          org: state.allOrganisations[index]));
+                          org: state.allOrganisations[index],
+                          preview: false));
                     },
                     child: Container(
                       height: 200,
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Card(
-                        color: Colors.grey,
+                        // color: Colors.grey,
                         elevation: 20,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

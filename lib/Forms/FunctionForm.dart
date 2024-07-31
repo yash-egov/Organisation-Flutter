@@ -122,6 +122,7 @@ class _FunctionsFormState extends State<FunctionsForm> {
                             .add(addOrganisationFunctionEvent(functions));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.green,
                             content:
                                 Text('Function Details Added SuccessFully'),
                             duration: Duration(
@@ -132,6 +133,7 @@ class _FunctionsFormState extends State<FunctionsForm> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.red,
                             content: Text('Invalid Function Details '),
                             duration: Duration(
                                 seconds:
