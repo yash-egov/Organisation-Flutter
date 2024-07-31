@@ -15,7 +15,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: IdentifierForm.page),
         AutoRoute(page: DocumentsForm.page),
         AutoRoute(page: FunctionsForm.page),
-        AutoRoute(page: FunctionDocumentsForm.page),
+        // AutoRoute(page: FunctionDocumentsForm.page),
         AutoRoute(page: AllOrganisations.page),
         AutoRoute(page: PreviewOrganisation.page),
         AutoRoute(page: SingleOrganisation.page),

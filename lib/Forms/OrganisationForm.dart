@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:digit_flutter_components/enum/app_enums.dart';
 import 'package:digit_flutter_components/theme/digit_theme.dart';
+import 'package:digit_flutter_components/utils/validators/validator.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_date_form_input.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
@@ -33,6 +36,14 @@ class _OrganisationFormState extends State<OrganisationForm> {
       TextEditingController();
 
   // Add more controllers for other fields
+  bool IsDataValid(Organisation org) {
+    print('${org.name} ${org.tenantId}');
+    if (org.name == null ||
+        org.tenantId == null ||
+        org.name?.length == 0 ||
+        org.tenantId?.length == 0) return false;
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +72,8 @@ class _OrganisationFormState extends State<OrganisationForm> {
                 innerLabel: '',
                 helpText: 'e.g pb.amritsar',
                 charCount: true,
+                isRequired: true,
+                validations: [Validator(ValidatorType.minLength, 2)],
                 onChange: (value) {
                   org.tenantId = value;
                 },
@@ -72,6 +85,7 @@ class _OrganisationFormState extends State<OrganisationForm> {
                 innerLabel: '',
                 helpText: 'e.g EGov',
                 charCount: true,
+                isRequired: true,
                 onChange: (value) {
                   org.name = value;
                 },
@@ -116,19 +130,29 @@ class _OrganisationFormState extends State<OrganisationForm> {
         child: BlocBuilder<OrganisationBloc, OrganisationState>(
           builder: (context, state) {
             return DigitButton(
-              label: 'Next',
-              onPressed: () {
-                context.read<OrganisationBloc>().add(
-                    addOrganisationBasicDetailsEvent(
-                        org.tenantId,
-                        org.name,
-                        org.applicationStatus,
-                        org.externalRefNumber,
-                        org.dateOfIncorporation));
-                AutoRouter.of(context).push(AddressForm(org: org));
-              },
-              type: ButtonType.primary,
-            );
+                label: 'Next',
+                onPressed: () {
+                  if (IsDataValid(org)) {
+                    context.read<OrganisationBloc>().add(
+                        addOrganisationBasicDetailsEvent(
+                            org.tenantId,
+                            org.name,
+                            org.applicationStatus,
+                            org.externalRefNumber,
+                            org.dateOfIncorporation));
+                    AutoRouter.of(context).push(AddressForm(org: org));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Invalid TenantId or Name '),
+                        duration: Duration(
+                            seconds:
+                                2), // The duration for which the snackbar is displayed
+                      ),
+                    );
+                  }
+                },
+                type: ButtonType.primary);
           },
         ),
       ),

@@ -12,17 +12,18 @@ import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/material.dart' as _i15;
 import 'package:organisations/Forms/AddressForm.dart' as _i5;
 import 'package:organisations/Forms/ContactForm.dart' as _i4;
-import 'package:organisations/Forms/DocumentsForm.dart' as _i9;
-import 'package:organisations/Forms/FunctionDocumentsForm.dart' as _i7;
-import 'package:organisations/Forms/FunctionForm.dart' as _i8;
+import 'package:organisations/Forms/DocumentsForm.dart' as _i8;
+import 'package:organisations/Forms/FunctionDocumentsForm.dart' as _i12;
+import 'package:organisations/Forms/FunctionForm.dart' as _i7;
 import 'package:organisations/Forms/IdentifierForm.dart' as _i3;
 import 'package:organisations/Forms/OrganisationForm.dart' as _i6;
 import 'package:organisations/Home.dart' as _i2;
+import 'package:organisations/Models/Functions.dart' as _i16;
 import 'package:organisations/Models/Organisation.dart' as _i14;
 import 'package:organisations/RegisterationFormScreen.dart' as _i1;
-import 'package:organisations/Screens/AllOrganisations.dart' as _i10;
-import 'package:organisations/Screens/PreviewOrganisation.dart' as _i11;
-import 'package:organisations/Screens/SingleOrganisation.dart' as _i12;
+import 'package:organisations/Screens/AllOrganisations.dart' as _i9;
+import 'package:organisations/Screens/PreviewOrganisation.dart' as _i10;
+import 'package:organisations/Screens/SingleOrganisation.dart' as _i11;
 
 abstract class $AppRouter extends _i13.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -68,49 +69,54 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: _i6.OrganisationForm(),
       );
     },
-    FunctionDocumentsForm.name: (routeData) {
-      final args = routeData.argsAs<FunctionDocumentsFormArgs>();
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i7.FunctionDocumentsForm(
-          functionIndex: args.functionIndex,
-          function: args.function,
-        ),
-      );
-    },
     FunctionsForm.name: (routeData) {
       final args = routeData.argsAs<FunctionsFormArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i8.FunctionsForm(org: args.org),
+        child: _i7.FunctionsForm(org: args.org),
       );
     },
     DocumentsForm.name: (routeData) {
       final args = routeData.argsAs<DocumentsFormArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.DocumentsForm(org: args.org),
+        child: _i8.DocumentsForm(org: args.org),
       );
     },
     AllOrganisations.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.AllOrganisations(),
+        child: const _i9.AllOrganisations(),
       );
     },
     PreviewOrganisation.name: (routeData) {
+      final args = routeData.argsAs<PreviewOrganisationArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.PreviewOrganisation(),
+        child: _i10.PreviewOrganisation(
+          args.screen,
+          args.org,
+          key: args.key,
+        ),
       );
     },
     SingleOrganisation.name: (routeData) {
       final args = routeData.argsAs<SingleOrganisationArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.SingleOrganisation(
+        child: _i11.SingleOrganisation(
           args.index,
           key: args.key,
+        ),
+      );
+    },
+    FunctionDocumentsForm.name: (routeData) {
+      final args = routeData.argsAs<FunctionDocumentsFormArgs>();
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i12.FunctionDocumentsForm(
+          functionIndex: args.functionIndex,
+          function: args.function,
         ),
       );
     },
@@ -247,46 +253,7 @@ class OrganisationForm extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.FunctionDocumentsForm]
-class FunctionDocumentsForm
-    extends _i13.PageRouteInfo<FunctionDocumentsFormArgs> {
-  FunctionDocumentsForm({
-    required int functionIndex,
-    required _i14.Functions function,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          FunctionDocumentsForm.name,
-          args: FunctionDocumentsFormArgs(
-            functionIndex: functionIndex,
-            function: function,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FunctionDocumentsForm';
-
-  static const _i13.PageInfo<FunctionDocumentsFormArgs> page =
-      _i13.PageInfo<FunctionDocumentsFormArgs>(name);
-}
-
-class FunctionDocumentsFormArgs {
-  const FunctionDocumentsFormArgs({
-    required this.functionIndex,
-    required this.function,
-  });
-
-  final int functionIndex;
-
-  final _i14.Functions function;
-
-  @override
-  String toString() {
-    return 'FunctionDocumentsFormArgs{functionIndex: $functionIndex, function: $function}';
-  }
-}
-
-/// generated route for
-/// [_i8.FunctionsForm]
+/// [_i7.FunctionsForm]
 class FunctionsForm extends _i13.PageRouteInfo<FunctionsFormArgs> {
   FunctionsForm({
     required _i14.Organisation org,
@@ -315,7 +282,7 @@ class FunctionsFormArgs {
 }
 
 /// generated route for
-/// [_i9.DocumentsForm]
+/// [_i8.DocumentsForm]
 class DocumentsForm extends _i13.PageRouteInfo<DocumentsFormArgs> {
   DocumentsForm({
     required _i14.Organisation org,
@@ -344,7 +311,7 @@ class DocumentsFormArgs {
 }
 
 /// generated route for
-/// [_i10.AllOrganisations]
+/// [_i9.AllOrganisations]
 class AllOrganisations extends _i13.PageRouteInfo<void> {
   const AllOrganisations({List<_i13.PageRouteInfo>? children})
       : super(
@@ -358,21 +325,50 @@ class AllOrganisations extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.PreviewOrganisation]
-class PreviewOrganisation extends _i13.PageRouteInfo<void> {
-  const PreviewOrganisation({List<_i13.PageRouteInfo>? children})
-      : super(
+/// [_i10.PreviewOrganisation]
+class PreviewOrganisation extends _i13.PageRouteInfo<PreviewOrganisationArgs> {
+  PreviewOrganisation({
+    required String screen,
+    required _i14.Organisation org,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
           PreviewOrganisation.name,
+          args: PreviewOrganisationArgs(
+            screen: screen,
+            org: org,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PreviewOrganisation';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i13.PageInfo<PreviewOrganisationArgs> page =
+      _i13.PageInfo<PreviewOrganisationArgs>(name);
+}
+
+class PreviewOrganisationArgs {
+  const PreviewOrganisationArgs({
+    required this.screen,
+    required this.org,
+    this.key,
+  });
+
+  final String screen;
+
+  final _i14.Organisation org;
+
+  final _i15.Key? key;
+
+  @override
+  String toString() {
+    return 'PreviewOrganisationArgs{screen: $screen, org: $org, key: $key}';
+  }
 }
 
 /// generated route for
-/// [_i12.SingleOrganisation]
+/// [_i11.SingleOrganisation]
 class SingleOrganisation extends _i13.PageRouteInfo<SingleOrganisationArgs> {
   SingleOrganisation({
     required int index,
@@ -406,5 +402,44 @@ class SingleOrganisationArgs {
   @override
   String toString() {
     return 'SingleOrganisationArgs{index: $index, key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i12.FunctionDocumentsForm]
+class FunctionDocumentsForm
+    extends _i13.PageRouteInfo<FunctionDocumentsFormArgs> {
+  FunctionDocumentsForm({
+    required int functionIndex,
+    required _i16.Functions function,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+          FunctionDocumentsForm.name,
+          args: FunctionDocumentsFormArgs(
+            functionIndex: functionIndex,
+            function: function,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FunctionDocumentsForm';
+
+  static const _i13.PageInfo<FunctionDocumentsFormArgs> page =
+      _i13.PageInfo<FunctionDocumentsFormArgs>(name);
+}
+
+class FunctionDocumentsFormArgs {
+  const FunctionDocumentsFormArgs({
+    required this.functionIndex,
+    required this.function,
+  });
+
+  final int functionIndex;
+
+  final _i16.Functions function;
+
+  @override
+  String toString() {
+    return 'FunctionDocumentsFormArgs{functionIndex: $functionIndex, function: $function}';
   }
 }

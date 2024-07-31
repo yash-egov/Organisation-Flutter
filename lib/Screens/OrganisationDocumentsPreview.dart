@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organisations/Models/Document.dart';
 import 'package:organisations/Models/Organisation.dart';
 
 class OrganisationDocumentsPreview extends StatefulWidget {
@@ -20,33 +21,34 @@ class _OrganisationDocumentsPreviewState
     final document = widget.documents[widget.index];
 
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Organisation Document : ${widget.index + 1}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Text("Document Type: "),
-                Text(document.documentType ?? 'N/A'),
-              ],
-            ),
-            Row(
-              children: [
-                Text("Filestore Type: "),
-                Text(document.fileStore ?? 'N/A'),
-              ],
-            ),
-          ],
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Card(
+        elevation: 10,
+        color: const Color.fromARGB(255, 230, 224, 224),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Organisation Document : ${widget.index + 1}",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text("Document Type: "),
+                  Text(document.documentType ?? 'N/A'),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Filestore Type: "),
+                  Text(document.fileStore ?? 'N/A'),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

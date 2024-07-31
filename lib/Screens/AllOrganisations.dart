@@ -108,30 +108,31 @@ class _AllOrganisationsState extends State<AllOrganisations> {
                 itemBuilder: (context, index) {
                   return TextButton(
                     onPressed: () {
-                      AutoRouter.of(context)
-                          .push(SingleOrganisation(index: index));
+                      AutoRouter.of(context).push(PreviewOrganisation(
+                          screen: state.allOrganisations[index].name!,
+                          org: state.allOrganisations[index]));
                     },
                     child: Container(
-                      margin: EdgeInsets.all(20),
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            '${state.allOrganisations[index].name}',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            '${state.allOrganisations[index].tenantId}',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                      height: 200,
+                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Card(
+                        color: Colors.grey,
+                        elevation: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              '${state.allOrganisations[index].name}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              '${state.allOrganisations[index].tenantId}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

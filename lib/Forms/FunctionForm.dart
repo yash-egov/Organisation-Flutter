@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, dead_code
+
 import 'package:digit_flutter_components/digit_components.dart';
 import 'package:digit_flutter_components/enum/app_enums.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_text_form_input.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
+import 'package:organisations/Models/Functions.dart';
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
@@ -34,6 +37,17 @@ class _FunctionsFormState extends State<FunctionsForm> {
 
   Functions functions = new Functions();
 
+  bool isFunctionValid(Functions function) {
+    if (function.type == null ||
+        function.category == null ||
+        function.className == null) return false;
+
+    if (function.type?.length == 0 ||
+        function.category?.length == 0 ||
+        function.className?.length == 0) return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +72,7 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 innerLabel: '',
                 helpText: '',
                 charCount: true,
+                isRequired: true,
                 onChange: (value) => functions.type = value,
               ),
               DigitTextFormInput(
@@ -67,6 +82,7 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 innerLabel: '',
                 helpText: '',
                 charCount: true,
+                isRequired: true,
                 onChange: (value) => functions.category = value,
               ),
               DigitTextFormInput(
@@ -76,6 +92,7 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 innerLabel: '',
                 helpText: '',
                 charCount: true,
+                isRequired: true,
                 onChange: (value) => functions.className = value,
               ),
               DigitDateFormInput(
@@ -99,9 +116,29 @@ class _FunctionsFormState extends State<FunctionsForm> {
                 builder: (context, state) {
                   return DigitButton(
                     onPressed: () {
-                      context
-                          .read<OrganisationBloc>()
-                          .add(addOrganisationFunctionEvent(functions));
+                      if (isFunctionValid(functions)) {
+                        context
+                            .read<OrganisationBloc>()
+                            .add(addOrganisationFunctionEvent(functions));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Function Details Added SuccessFully'),
+                            duration: Duration(
+                                seconds:
+                                    2), // The duration for which the snackbar is displayed
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Invalid Function Details '),
+                            duration: Duration(
+                                seconds:
+                                    2), // The duration for which the snackbar is displayed
+                          ),
+                        );
+                      }
                     },
                     label: 'Add Function',
                     type: ButtonType.secondary,

@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:digit_flutter_components/enum/app_enums.dart';
 import 'package:digit_flutter_components/theme/digit_theme.dart';
 import 'package:digit_flutter_components/widgets/atoms/digit_button.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organisations/Constants/text.dart';
+import 'package:organisations/Models/Identifier.dart';
 import 'package:organisations/Models/Organisation.dart';
 import 'package:organisations/bloc/organisation_bloc/organisation_bloc.dart';
 import 'package:organisations/router/app_router.gr.dart';
@@ -28,6 +31,13 @@ class _IdentifierFormState extends State<IdentifierForm> {
   final TextEditingController _valueController = TextEditingController();
   bool _isActive = true;
   Identifier identifier = new Identifier();
+
+  bool IsIdentifierValid(Identifier idf) {
+    if (idf.type == null || idf.value == null) return false;
+    if (idf.type?.length == 0 || idf.value?.length == 0) return false;
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +63,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   innerLabel: '',
                   helpText: '',
                   charCount: true,
+                  isRequired: true,
                   onChange: (value) => identifier.type = value,
                 ),
 
@@ -63,6 +74,7 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   innerLabel: '',
                   helpText: '',
                   charCount: true,
+                  isRequired: true,
                   onChange: (value) => identifier.value = value,
                 ),
 
@@ -81,9 +93,30 @@ class _IdentifierFormState extends State<IdentifierForm> {
                   builder: (context, state) {
                     return DigitButton(
                       onPressed: () {
-                        context
-                            .read<OrganisationBloc>()
-                            .add(addOrganisationIdentifierEvent(identifier));
+                        if (IsIdentifierValid(identifier)) {
+                          context
+                              .read<OrganisationBloc>()
+                              .add(addOrganisationIdentifierEvent(identifier));
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  ' Identifier Details Added SuccessFully'),
+                              duration: Duration(
+                                  seconds:
+                                      2), // The duration for which the snackbar is displayed
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Empty Identifier Details '),
+                              duration: Duration(
+                                  seconds:
+                                      2), // The duration for which the snackbar is displayed
+                            ),
+                          );
+                        }
                       },
                       label: 'Add Identifier',
                       type: ButtonType.secondary,

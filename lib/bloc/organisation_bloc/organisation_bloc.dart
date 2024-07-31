@@ -1,6 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:organisations/Models/Address.dart';
+import 'package:organisations/Models/ContactDetails.dart';
+import 'package:organisations/Models/Document.dart';
+import 'package:organisations/Models/Functions.dart';
+import 'package:organisations/Models/Identifier.dart';
 import 'package:organisations/Models/Organisation.dart';
 
 part 'organisation_event.dart';
