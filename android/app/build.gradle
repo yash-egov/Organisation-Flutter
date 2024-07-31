@@ -1,10 +1,9 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
+    id "kotlin-android" // Ensure this is included
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
@@ -12,47 +11,56 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
-
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
     flutterVersionCode = "1"
 }
-
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
-
 android {
     namespace = "com.example.organisations"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = flutter.compileSdkVersion // Use the latest available version, such as 33
     ndkVersion = flutter.ndkVersion
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    kotlinOptions { // Ensure compatibility with the desired version of Kotlin
+        jvmTarget = '1.8'
+    }
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.organisations"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = flutter.minSdkVersion // Ensure it's compatible, like 21 or 23
+        targetSdk = flutter.targetSdkVersion // Make sure this is set to a recent version, e.g., 33
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
-
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
         }
     }
 }
-
 flutter {
     source = "../.."
 }
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Ensure this line is included
+    // Add other dependencies as needed
+}
+
+
+
+
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
+    }
+}
+
+
+
+
