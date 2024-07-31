@@ -8,10 +8,10 @@ class AllOrganisationsState {
 }
 
 final class AllOrganisationsInitial extends AllOrganisationsState {
-  AllOrganisationsInitial() : super([], false, false);
+  AllOrganisationsInitial() : super([], true, false);
 }
 
 class AllOrganisationsUpdated extends AllOrganisationsState {
   AllOrganisationsUpdated(List<Organisation> allorg)
-      : super(allorg, false, false);
+      : super(allorg, true, false);
 }

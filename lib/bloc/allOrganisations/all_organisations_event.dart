@@ -11,6 +11,12 @@ class getQueryOrganisationsEvent extends AllOrganisationsEvent {
   getQueryOrganisationsEvent(this.query);
 }
 
-class toggleNameEvent extends AllOrganisationsEvent {}
+class toggleNameEvent extends AllOrganisationsEvent {
+  bool value;
+  toggleNameEvent(this.value);
+}
 
-class toggleTenantEvent extends AllOrganisationsEvent {}
+class toggleTenantEvent extends AllOrganisationsEvent {
+  bool value;
+  toggleTenantEvent(this.value);
+}

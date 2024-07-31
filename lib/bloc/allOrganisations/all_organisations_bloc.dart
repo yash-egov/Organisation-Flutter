@@ -11,18 +11,11 @@ class AllOrganisationsBloc
   AllOrganisationsBloc() : super(AllOrganisationsInitial()) {
     on<toggleNameEvent>((event, emit) {
       print("toggling name event");
-      if (state.name == true) {
-        state.name = false;
-      } else {
-        state.name = true;
-      }
+      state.name = event.value;
     });
     on<toggleTenantEvent>((event, emit) {
-      if (state.tenant == true) {
-        state.tenant = false;
-      } else {
-        state.tenant = true;
-      }
+      print("toggling tenant event");
+      state.tenant = event.value;
     });
     on<AllOrganisationsEvent>((event, emit) {
       // TODO: implement event handler
