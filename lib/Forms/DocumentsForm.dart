@@ -106,6 +106,7 @@ class _DocumentsFormState extends State<DocumentsForm> {
                             .add(addOrganisationDocumentEvent(document));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.green,
                             content: Text('Document Added Successfully'),
                             duration: Duration(seconds: 2),
                           ),
@@ -114,6 +115,7 @@ class _DocumentsFormState extends State<DocumentsForm> {
                         form.markAllAsTouched();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            backgroundColor: Colors.red,
                             content: Text('Invalid Document'),
                             duration: Duration(seconds: 2),
                           ),
